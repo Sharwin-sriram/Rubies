@@ -32,14 +32,15 @@ a::after {
   background-color: currentColor;
   position: absolute;
   transition: 0.7s ease;
-  &::after {
-    left: 50%;
-  }
-  &::before {
-    right: 50%;
-  }
 }
 
+a::after {
+  left: 50%;
+}
+
+a::before {
+  right: 50%;
+}
 a:hover {
   &::after,
   &::before {

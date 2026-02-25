@@ -1,17 +1,18 @@
 import { Icon } from "@iconify/react";
 import style from "@styles/Header.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
 
 export default ({ search, setSearch }) => {
   const navigate = useNavigate();
   const navItems = [
-    { title: "categories" },
-    { title: "On Sale", to: "" },
-    { title: "Brands", to: "" },
+    { title: "categories", to: "/categories" },
+    { title: "On Sale", to: "/sale" },
+    { title: "Brands", to: "/brands" },
   ];
   const [expanded, setExpanded] = useState(false);
-  const [typing, setTyping] = useState(false);
+  const [localSearch, setLocalSearch] = useState("");
+  const timeoutRef = useRef(null);
   const size = 24;
   const handleExpand = (e) => {
     e.stopPropagation();
@@ -27,14 +28,20 @@ export default ({ search, setSearch }) => {
   };
 
   useEffect(() => {
-    // TODO: FIX CLOSING BUG IN SEARCH
-    // SEARCH BAR CLOSES TOO SOON EVEN WHEN TYPED
     const close = () => setExpanded(false);
-    if (!search && expanded) {
+    if (expanded && !localSearch) {
       window.addEventListener("click", close);
     }
     return () => window.removeEventListener("click", close);
-  }, [expanded, search]);
+  }, [expanded, localSearch]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <header className={style.header}>
@@ -45,7 +52,10 @@ export default ({ search, setSearch }) => {
         {navItems.map((item, index) => {
           const { title, to } = item;
           return (
-            <a href={to} key={index + 69}>
+            <a href={to} key={index + 69} onClick={(e) => {
+              e.preventDefault();
+              navigate(to);
+            }}>
               {title}
             </a>
           );
@@ -60,12 +70,18 @@ export default ({ search, setSearch }) => {
             type="text"
             className={style.searchBox}
             onChange={(e) => {
-              setTyping(true);
-              setTimeout(() => {
-                setSearch(e.target.value);
-                if (!search) setTyping(false);
-              }, 1000);
+              const value = e.target.value;
+              setLocalSearch(value);
+              
+              if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+              }
+              
+              timeoutRef.current = setTimeout(() => {
+                setSearch(value);
+              }, 500);
             }}
+            value={localSearch}
           />
 
           <Icon

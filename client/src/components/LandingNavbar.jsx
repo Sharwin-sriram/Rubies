@@ -1,12 +1,14 @@
 import { Icon } from "@iconify/react";
 import style from "@styles/Navbar.module.css";
+import { useNavigate } from "react-router";
 
 export default () => {
+  const navigate = useNavigate();
   const navBar = [
-    { title: "Home", to: "" },
-    { title: "IEMS", to: "" },
-    { title: "Budget friendly", to: "" },
-    { title: "Over ears", to: "" },
+    { title: "Home", to: "/shop" },
+    { title: "IEMS", to: "/iems" },
+    { title: "Budget friendly", to: "/budget" },
+    { title: "Over ears", to: "/over-ears" },
   ];
   const size = 32;
   const color = "white";
@@ -20,7 +22,10 @@ export default () => {
         {navBar.map((navItem, index) => {
           const { title, to } = navItem;
           return (
-            <a href={to} key={index}>
+            <a href={to} key={index} onClick={(e) => {
+              e.preventDefault();
+              navigate(to);
+            }}>
               {title}
             </a>
           );
