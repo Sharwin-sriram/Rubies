@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --font-heading: "Inter";
+  --font-sec: "Poppins";
+  --font-ter: "Lato";
+
+  --prim: black;
+  --sec: white;
+
+  --c1: hsl(55, 100%, 50%);
+}
+
+a {
+  cursor: pointer;
+  font-family: var(--font-sec);
+  text-decoration: none;
+  color: currentColor;
+  position: relative;
+}
+
+a::before,
+a::after {
+  content: "";
+  width: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: currentColor;
+  position: absolute;
+  transition: 0.7s ease;
+  &::after {
+    left: 50%;
+  }
+  &::before {
+    right: 50%;
+  }
+}
+
+a:hover {
+  &::after,
+  &::before {
+    width: 50%;
+  }
+}
+
+button {
+  font-family: var(--font-sec);
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+input {
+  background: none;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+}

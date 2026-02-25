@@ -1,0 +1,52 @@
+.NavBar {
+  position: fixed;
+  top: 0;
+  padding: 1em;
+  height: 4.5em;
+  display: flex;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+  padding: 7px;
+  color: var(--sec);
+  /* background-color: currentColor; */
+}
+
+.logo h4 {
+  font-family: var(--font-heading);
+  text-shadow: 0px 0px 0px black;
+  user-select: none;
+  color: var(--sec);
+  font-weight: 600;
+  font-size: 2em;
+}
+
+.nav {
+  align-items: flex-start;
+  flex-direction: column;
+  position: absolute;
+  color: var(--sec);
+  padding: 5em 1em;
+  display: flex;
+  gap: 3px;
+  left: 0;
+  top: 0;
+}
+
+.RightSection {
+  display: flex;
+  padding: 0 1em;
+  gap: 10px;
+  position: absolute;
+  right: 0;
+  /* top: 0; */
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+}
