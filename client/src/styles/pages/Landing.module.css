@@ -52,6 +52,7 @@
   font-family: var(--font-ter);
   color: var(--c1);
   button {
+    color: black;
     display: flex;
     font-size: 0.7em;
     font-weight: 600;
