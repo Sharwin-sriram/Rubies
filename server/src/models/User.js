@@ -61,20 +61,15 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function() {
   // Only hash the password if it has been modified (or is new)
   if (!this.isModified('password')) {
-    return next();
+    return;
   }
 
-  try {
-    // Hash password with cost factor of 12
-    const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS) || 12);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (error) {
-    next(error);
-  }
+  // Hash password with cost factor of 12
+  const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS) || 12);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 // Compare password method
